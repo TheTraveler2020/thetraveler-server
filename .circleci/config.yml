@@ -39,11 +39,11 @@ jobs:
             - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
             - v1-gem-cache-{{ arch }}-{{ .Branch }}-
             - v1-gem-cache-{{ arch }}-
+      - run: RAILS_ENV=test bundle install --jobs $(nproc) "${FLAGS[@]}"
       - save_cache:
           paths:
             - ~/.bundle
           key: v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-      - run: RAILS_ENV=test bundle install --jobs $(nproc) "${FLAGS[@]}"
 
       # Yarn install
       # - run: curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
