@@ -21,9 +21,9 @@ jobs:
       - checkout
 
       # Restore Cached Dependencies
-      - type: cache-restore
-        name: Restore bundle cache
-        key: your-app-name-{{ checksum "Gemfile.lock" }}
+      # - type: cache-restore
+      #   name: Restore bundle cache
+      #   key: your-app-name-{{ checksum "Gemfile.lock" }}
 
       # Bundle install dependencies
       - run: gem update --system
@@ -32,6 +32,17 @@ jobs:
       - run: node -v
       - run: sudo apt-get install -y -qq libpq-dev libv8-dev
       - run: gem install bundler -v 2.1.4
+
+      - restore_cache:
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - v1-gem-cache-{{ arch }}-{{ .Branch }}-
+            - v1-gem-cache-{{ arch }}-
+      - save_cache:
+          paths:
+            - ~/.bundle
+          key: v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
       - run: RAILS_ENV=test bundle install --jobs $(nproc) "${FLAGS[@]}"
 
       # Yarn install
@@ -41,11 +52,11 @@ jobs:
       # - run: export PATH="$(yarn global bin):$PATH"
 
       # Cache Dependencies
-      - type: cache-save
-        name: Store bundle cache
-        key: your-app-name-{{ checksum "Gemfile.lock" }}
-        paths:
-          - vendor/bundle
+      # - type: cache-save
+      #   name: Store bundle cache
+      #   key: your-app-name-{{ checksum "Gemfile.lock" }}
+      #   paths:
+      #     - vendor/bundle
 
       # Wait for DB
       # - run: dockerize -wait tcp://localhost:5432 -timeout 1m
