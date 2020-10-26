@@ -50,6 +50,7 @@ test:
 #
 production:
   <<: *default
-  database: thetraveler-server_production
-  username: thetraveler-server
-  password: <%= ENV['THETRAVELER-SERVER_DATABASE_PASSWORD'] %>
+  database: heroku_7a6bed34053cfb6
+  username: bd8e242b681f6e
+  password: c2099768
+  host: us-cdbr-east-02.cleardb.com
