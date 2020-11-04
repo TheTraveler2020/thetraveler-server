@@ -1,0 +1,10 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+create_table 'guiders', id: :integer, force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC' do |t|
+  t.bigint   'account_id'
+  t.string   'interests'
+  t.string   'communication_skill'
+  t.string   'experience'
+  t.datetime 'created_at'
+  t.datetime 'updated_at'
+end
