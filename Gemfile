@@ -85,3 +85,6 @@ gem 'cancancan'
 
 # Cors
 gem 'rack-cors'
+
+# Rolify
+gem 'rolify'
