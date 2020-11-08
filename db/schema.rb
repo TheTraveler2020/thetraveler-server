@@ -47,10 +47,43 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "sign_up_via"
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
+    t.bigint "user_id"
+    t.bigint "guider_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
+  end
+
+  create_table "accounts_roles", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.integer "account_id"
+    t.integer "role_id"
+    t.index ["account_id", "role_id"], name: "index_accounts_roles_on_account_id_and_role_id"
+  end
+
+  create_table "guiders", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "account_id"
+    t.string "interests"
+    t.string "communication_skill"
+    t.string "experience"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.integer "resource_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["name"], name: "index_roles_on_name"
+  end
+
+  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

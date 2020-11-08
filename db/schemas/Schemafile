@@ -1,3 +1,5 @@
+require 'accounts_roles.schema'
 require 'accounts.schema'
 require 'guiders.schema'
+require 'roles.schema'
 require 'users.schema'
